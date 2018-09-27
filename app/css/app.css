@@ -1,0 +1,56 @@
+html,body{
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.buddha-main {
+    height: 100%;
+}
+
+.buddha-nav-head {
+    margin-left: 30px;
+    margin-right: 50px;
+    color: white;
+}
+
+.buddha_nav_side {
+    top: 60px;
+}
+
+.header-demo .logo {
+    left: 40px;
+}
+
+.logo img {
+    width: 82px;
+    height: 31px;
+}
+
+.logo {
+    position: absolute;
+    left: 0;
+    top: 16px;
+}
+
+.header-demo {
+    height: 60px;
+    border-bottom: none;
+}
+
+.header .layui-nav {
+    position: absolute;
+    top: 0;
+    left: 200px;
+    padding: 0;
+}
+
+.header-demo .layui-nav {
+    top: 0;
+}
+
+

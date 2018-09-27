@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>学习小帮手</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <!-- CSS 文件 -->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="../css/g3.css">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin  buddha-main">
+    <div class="layui-header header header-demo" autumn="">
+        <div class="layui-main">
+            <a class="logo" href="index.html">
+                <img src="../images/logo.png" alt="layui">
+            </a>
+            <ul class="layui-nav" lay-filter="">
+                <li class="layui-nav-item"><a href="">三年级</a></li>
+                <li class="layui-nav-item"><a href="">四年级</a></li>
+                <li class="layui-nav-item"><a href="">五年级</a></li>
+                <li class="layui-nav-item"><a href="">六年级</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <ul class="layui-nav layui-nav-tree layui-nav-side buddha_nav_side">
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="javascript:;">数学</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">每日口算</a></dd>
+                <dd><a href="mathstat.html">成绩统计</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">语文</a>
+            <dl class="layui-nav-child">
+                <dd><a href="tingxie.html">听写</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">英语</a>
+            <dl class="layui-nav-child">
+                <dd><a href="beidanci.html">背单词</a></dd>
+            </dl>
+        </li>
+    </ul>
+
+    <div class="region" id="kousuan">
+        <div class="layui-btn-group">
+            <button id="test" class="layui-btn">自动生成测试</button>
+            <button id="answer" class="layui-btn">显示/隐藏答案</button>
+            <button id="save" class="layui-btn">保存PDF</button>
+        </div>
+        <div class="layui-collapse">
+
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">选项</h2>
+                <div class="layui-colla-content">
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">班级</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="grade" required  lay-verify="required" placeholder="请输入班级" autocomplete="off" class="layui-input" value="三年级四班">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">姓名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="name" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input" value="郭玥灵">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">测试日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">题目难度</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="level" value="1" title="初级">
+                                <input type="radio" name="level" value="2" title="中级" checked>
+                                <input type="radio" name="level" value="3" title="高级">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">显示列数</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="colnum" value="1" title="1列">
+                                <input type="radio" name="colnum" value="2" title="2列">
+                                <input type="radio" name="colnum" value="3" title="3列">
+                                <input type="radio" name="colnum" value="4" title="4列" checked>
+                                <input type="radio" name="colnum" value="5" title="5列">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">题目数目</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="sum" required  lay-verify="required" placeholder="请输入题目数目" autocomplete="off" class="layui-input" value="40">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <hr class="layui-bg-red">
+        <div id="page" class="page">
+        </div>
+    </div>
+
+</div>
+
+<script id="tpl-test" type="text/html">
+    <div class="page-header">
+        <h2 align="center">口算练习</h2>
+        <p>
+            <span class="pg-timestamp">{{ d.info.time }}</span>
+            <span class="pg-name">{{ d.info.name }}</span>
+            <span class="pg-grade">{{ d.info.grade }}</span>
+        </p>
+    </div>
+    <hr class="layui-bg-black">
+    <table class="layui-table page-body">
+        <colgroup>
+            {{#  layui.each(d.col, function(index, item){ }}
+            <col width="{{ item }}">
+            {{#  }); }}
+        </colgroup>
+        <tbody>
+        {{#  layui.each(d.list, function(index, item){ }}
+        <tr>
+            {{#  layui.each(item, function(index, t){ }}
+            <td>{{ t.q }}<span class="answer hidden">{{ t.a }}</span></td>
+            {{#  }); }}
+        </tr>
+        {{#  }); }}
+        </tbody>
+    </table>
+    <hr class="layui-bg-black">
+    <div class="page-footer">
+        <span class="pg-sign">家长签字:______________</span>
+        <span class="pg-time">用时:_____________</span>
+        <span class="pg-correct">对______</span>
+        <span class="pg-wrong">错______</span>
+    </div>
+    <hr class="layui-bg-white">
+</script>
+
+<script type="text/javascript" src="../lib/layui/layui.all.js"></script>
+<script type="text/javascript" src="../lib/jspdf.min.js"></script>
+<script type="text/javascript" src="../js/app.js"></script>
+<script type="text/javascript" src="../js/g3_kousuan.js"></script>
+</body>
+</html>

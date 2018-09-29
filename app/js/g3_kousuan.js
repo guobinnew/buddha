@@ -1,4 +1,3 @@
-var html2canvas = require('html2canvas')
 
 var table = layui.table
     ,form = layui.form

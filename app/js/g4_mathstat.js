@@ -220,7 +220,7 @@ function refreshTable() {
 }
 
 function reloadData() {
-    $.getJSON("../data/score/g3_kousuan.json", function (data) {
+    $.getJSON("../data/score/g4_kousuan.json", function (data) {
         "use strict";
 
         console.log(data)
@@ -364,10 +364,10 @@ var active = {
         var content = []
         content.push(savedata)
 
-        var _path = path.join(__dirname, '../data/score/g3_kousuan.json')
+        var _path = path.join(__dirname, '../data/score/g4_kousuan.json')
 
         // 备份
-        var _bkpath = path.join(__dirname, '../data/score/g3_kousuan_bak.json')
+        var _bkpath = path.join(__dirname, '../data/score/g4_kousuan_bak.json')
         fs.writeFileSync(_bkpath, fs.readFileSync(_path))
 
         // 写入

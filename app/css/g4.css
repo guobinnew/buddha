@@ -1,0 +1,127 @@
+#kousuan {
+    position: relative;
+    left: 200px;
+    padding: 10px;
+}
+
+
+#kousuan .region table {
+    width: 600px;
+}
+
+#kousuan .page{
+    background-color: white;
+    margin: 0 auto;
+    width: 600px;
+    font-family: Microsoft YaHei;
+}
+
+.page-header, .page-footer{
+    margin: 20px;
+    height: 5px;
+}
+
+.page-header h2{
+    margin-bottom: 10px;
+
+}
+
+.pg-timestamp {
+    margin-left: 100px;
+}
+
+.pg-name{
+    margin-left: 40px;
+}
+
+.pg-grade{
+    margin-right: 40px;
+}
+
+.pg-time{
+    margin-right: 20px;
+}
+
+.pg-sign{
+    margin-right: 20px;
+}
+
+.pg-correct, .pg-wrong{
+    margin-right: 20px;
+}
+
+#kousuan .page-header span {
+    float: right;
+}
+
+#kousuan .page-footer span {
+    float: right;
+}
+
+#kousuan .answer{
+    margin-left: 4px;
+    color: #333;
+    font-size: large;
+    font-weight: bold;
+}
+
+#kousuan tr {
+    height: 75px;
+    font-weight: bold;
+}
+
+#kousuan td {
+    font-size: medium;
+    vertical-align: top;
+}
+
+#kousuan .hidden {
+    display: none;
+}
+
+
+/*-------------------------------------------------*/
+
+.mathstat-title {
+    position: fixed;
+    left: 200px;
+    right: 0;
+    top: 65px;
+}
+
+#mathstat .mathstate-body {
+    padding: 0;
+    bottom: 60px;
+    top: 106px;
+}
+
+#chart {
+    height: 600px;
+}
+
+#chart-time {
+    height: 600px;
+}
+
+/*-------------------------------------------------*/
+
+#tingxie {
+   padding: 20px;
+}
+
+#tingxie p{
+    text-align:center;
+}
+
+.tingxie-word{
+    font-size: 100px;
+}
+
+.tingxie-chinese{
+    font-size: 60px;
+}
+
+.tingxie-index{
+    font-size: 20px;
+    margin: 20px;
+}

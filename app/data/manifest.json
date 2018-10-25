@@ -1,7 +1,6 @@
 {
-  "G3":{
-    "items":[
-      {"id":"kousuan", "group":"数学", "title":"口算", "route":"G3/kousuan.html"}
-    ]
+  "user": {
+    "name": "郭玥灵",
+    "class": "4"
   }
 }

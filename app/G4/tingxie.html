@@ -7,7 +7,7 @@
     <!-- CSS 文件 -->
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
     <link rel="stylesheet" href="../css/app.css">
-    <link rel="stylesheet" href="../css/g3.css">
+    <link rel="stylesheet" href="../css/g4.css">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin  buddha-main">
@@ -17,8 +17,8 @@
                 <img src="../images/logo.png" alt="layui">
             </a>
             <ul class="layui-nav" lay-filter="">
-                <li class="layui-nav-item  layui-this"><a href="">三年级</a></li>
-                <li class="layui-nav-item"><a href="../G4/index.html">四年级</a></li>
+                <li class="layui-nav-item"><a href="../G3/index.html">三年级</a></li>
+                <li class="layui-nav-item layui-this"><a href="javascript:;">四年级</a></li>
                 <li class="layui-nav-item"><a href="javascript:;">五年级</a></li>
                 <li class="layui-nav-item"><a href="javascript:;">六年级</a></li>
             </ul>
@@ -36,13 +36,13 @@
         <li class="layui-nav-item">
             <a href="javascript:;">语文</a>
             <dl class="layui-nav-child">
-                <dd><a href="tingxie.html">听写</a></dd>
+                <dd><a href="javascript:;">听写</a></dd>
             </dl>
         </li>
         <li class="layui-nav-item">
             <a href="javascript:;">英语</a>
             <dl class="layui-nav-child">
-                <dd><a href="javascript:;">背单词</a></dd>
+                <dd><a href="beidanci.html">背单词</a></dd>
             </dl>
         </li>
     </ul>
@@ -84,12 +84,6 @@
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">扩展</label>
-                            <div class="layui-input-block" id="tingxie-chapter-extend">
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
                             <label class="layui-form-label">听写模式</label>
                             <div class="layui-input-block">
                                 <input type="radio" name="mode" value="1" title="顺序">
@@ -120,7 +114,6 @@
             </div>
             <p class="tingxie-index">0/1</p>
             <p class="tingxie-word"> </p>
-            <p class="tingxie-chinese"> </p>
         </div>
     </div>
     <div id="voice"> </div>
@@ -138,22 +131,10 @@
     {{#  }); }}
 </script>
 
-<script id="tpl-chapter-ext" type="text/html">
-    {{#  layui.each(d.data, function(index, item){ }}
-    {{# if(item.length > 0){ }}
-    <input type="checkbox" name="chapter" title="{{ d.ext[index] }}" value="{{ index }}"
-           {{#  if(index == 0){ }}
-           checked
-           {{# } }}
-    >
-    {{# } }}
-    {{#  }); }}
-</script>
-
 <script type="text/javascript" src="../lib/responsivevoice.js"></script>
 <script type="text/javascript" src="../lib/layui/layui.all.js"></script>
 <script type="text/javascript" src="../lib/crypto-js/crypto-js.js"></script>
 <script type="text/javascript" src="../js/app.js"></script>
-<script type="text/javascript" src="../js/g3_beidanci.js"></script>
+<script type="text/javascript" src="../js/g4_tingxie.js"></script>
 </body>
 </html>

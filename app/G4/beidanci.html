@@ -7,7 +7,7 @@
     <!-- CSS 文件 -->
     <link rel="stylesheet" href="../lib/layui/css/layui.css">
     <link rel="stylesheet" href="../css/app.css">
-    <link rel="stylesheet" href="../css/g3.css">
+    <link rel="stylesheet" href="../css/g4.css">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin  buddha-main">
@@ -17,8 +17,8 @@
                 <img src="../images/logo.png" alt="layui">
             </a>
             <ul class="layui-nav" lay-filter="">
-                <li class="layui-nav-item layui-this"><a href="">三年级</a></li>
-                <li class="layui-nav-item"><a href="../G4/index.html">四年级</a></li>
+                <li class="layui-nav-item"><a href="../G3/index.html">三年级</a></li>
+                <li class="layui-nav-item layui-this"><a href="javascript:;">四年级</a></li>
                 <li class="layui-nav-item"><a href="javascript:;">五年级</a></li>
                 <li class="layui-nav-item"><a href="javascript:;">六年级</a></li>
             </ul>
@@ -29,7 +29,7 @@
         <li class="layui-nav-item layui-nav-itemed">
             <a href="javascript:;">数学</a>
             <dl class="layui-nav-child">
-                <dd><a href="javascript:;">每日口算</a></dd>
+                <dd><a href="kousuan.html">每日口算</a></dd>
                 <dd><a href="mathstat.html">成绩统计</a></dd>
             </dl>
         </li>
@@ -42,16 +42,15 @@
         <li class="layui-nav-item">
             <a href="javascript:;">英语</a>
             <dl class="layui-nav-child">
-                <dd><a href="beidanci.html">背单词</a></dd>
+                <dd><a href="javascript:;">背单词</a></dd>
             </dl>
         </li>
     </ul>
 
-    <div class="region" id="kousuan">
+    <div class="layui-body region" id="tingxie">
         <div class="layui-btn-group">
-            <button id="test" class="layui-btn">自动生成测试</button>
-            <button id="answer" class="layui-btn">显示/隐藏答案</button>
-            <button id="save" class="layui-btn">保存PDF</button>
+            <button id="start" class="layui-btn">开始听写</button>
+            <button id="restart" class="layui-btn">重头开始</button>
         </div>
         <div class="layui-collapse">
 
@@ -73,38 +72,31 @@
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">测试日期</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                            <label class="layui-form-label">上册</label>
+                            <div class="layui-input-block" id="tingxie-chapter-first">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">题目难度</label>
-                            <div class="layui-input-block">
-                                <input type="radio" name="level" value="1" title="初级">
-                                <input type="radio" name="level" value="2" title="中级" checked>
-                                <input type="radio" name="level" value="3" title="高级">
+                            <label class="layui-form-label">下册</label>
+                            <div class="layui-input-block" id="tingxie-chapter-second">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">显示列数</label>
-                            <div class="layui-input-block">
-                                <input type="radio" name="colnum" value="1" title="1列">
-                                <input type="radio" name="colnum" value="2" title="2列">
-                                <input type="radio" name="colnum" value="3" title="3列">
-                                <input type="radio" name="colnum" value="4" title="4列" checked>
-                                <input type="radio" name="colnum" value="5" title="5列">
+                            <label class="layui-form-label">扩展</label>
+                            <div class="layui-input-block" id="tingxie-chapter-extend">
                             </div>
                         </div>
 
                         <div class="layui-form-item">
-                            <label class="layui-form-label">题目数目</label>
+                            <label class="layui-form-label">听写模式</label>
                             <div class="layui-input-block">
-                                <input type="text" name="sum" required  lay-verify="required" placeholder="请输入题目数目" autocomplete="off" class="layui-input" value="40">
+                                <input type="radio" name="mode" value="1" title="顺序">
+                                <input type="radio" name="mode" value="2" title="随机" checked>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -112,51 +104,56 @@
 
         <hr class="layui-bg-red">
         <div id="page" class="page">
+
+            <button id="tingxie-read" class="layui-btn layui-btn-lg layui-btn-normal layui-btn-disabled">
+                <i class="layui-icon">&#xe608;</i> 再读一遍
+            </button>
+            <button id="tingxie-next" class="layui-btn layui-btn-lg layui-btn-warm layui-btn-disabled">
+                <i class="layui-icon">&#xe608;</i> 下一个单词
+            </button>
+            <button id="tingxie-answer" class="layui-btn layui-btn-lg layui-btn-danger layui-btn-disabled">
+                <i class="layui-icon">&#xe608;</i> 查看答案
+            </button>
+            <hr class="layui-bg-gray">
+            <div class="layui-progress layui-progress-big" lay-filter="progress" lay-showpercent="true">
+                <div class="layui-progress-bar" lay-percent="0%"><span class="layui-progress-text">0/1</span></div>
+            </div>
+            <p class="tingxie-index">0/1</p>
+            <p class="tingxie-word"> </p>
+            <p class="tingxie-chinese"> </p>
         </div>
     </div>
-
+    <div id="voice"> </div>
 </div>
 
-<script id="tpl-test" type="text/html">
-    <div class="page-header">
-        <h2 align="center">口算练习</h2>
-        <p>
-            <span class="pg-timestamp">{{ d.info.time }}</span>
-            <span class="pg-name">{{ d.info.name }}</span>
-            <span class="pg-grade">{{ d.info.grade }}</span>
-        </p>
-    </div>
-    <hr class="layui-bg-black">
-    <table class="layui-table page-body">
-        <colgroup>
-            {{#  layui.each(d.col, function(index, item){ }}
-            <col width="{{ item }}">
-            {{#  }); }}
-        </colgroup>
-        <tbody>
-        {{#  layui.each(d.list, function(index, item){ }}
-        <tr>
-            {{#  layui.each(item, function(index, t){ }}
-            <td>{{ t.q }}<span class="answer hidden">{{ t.a }}</span></td>
-            {{#  }); }}
-        </tr>
-        {{#  }); }}
-        </tbody>
-    </table>
-    <hr class="layui-bg-black">
-    <div class="page-footer">
-        <span class="pg-sign">家长签字:______________</span>
-        <span class="pg-time">用时:_____________</span>
-        <span class="pg-correct">对______</span>
-        <span class="pg-wrong">错______</span>
-    </div>
-    <hr class="layui-bg-white">
+<script id="tpl-chapter" type="text/html">
+    {{#  layui.each(d, function(index, item){ }}
+    {{# if(item.length > 0){ }}
+    <input type="checkbox" name="chapter" title="第{{ index+1 }}课" value="{{ index }}"
+           {{#  if(index == 0){ }}
+           checked
+           {{# } }}
+    >
+    {{# } }}
+    {{#  }); }}
 </script>
 
+<script id="tpl-chapter-ext" type="text/html">
+    {{#  layui.each(d.data, function(index, item){ }}
+    {{# if(item.length > 0){ }}
+    <input type="checkbox" name="chapter" title="{{ d.ext[index] }}" value="{{ index }}"
+           {{#  if(index == 0){ }}
+           checked
+           {{# } }}
+    >
+    {{# } }}
+    {{#  }); }}
+</script>
+
+<script type="text/javascript" src="../lib/responsivevoice.js"></script>
 <script type="text/javascript" src="../lib/layui/layui.all.js"></script>
-<script type="text/javascript" src="../lib/html2canvas.min.js"></script>
-<script type="text/javascript" src="../lib/jspdf.min.js"></script>
+<script type="text/javascript" src="../lib/crypto-js/crypto-js.js"></script>
 <script type="text/javascript" src="../js/app.js"></script>
-<script type="text/javascript" src="../js/g4_kousuan.js"></script>
+<script type="text/javascript" src="../js/g4_beidanci.js"></script>
 </body>
 </html>

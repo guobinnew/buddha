@@ -12,61 +12,56 @@ laydate.render({
 });
 
 
-let opers = ['+', '-']
+let opers = ['×', '÷']
 
 // 生成随机数
 function randomNumber(max, min = 0) {
     return Math.floor(Math.random()*(max-min+1) + min)
 }
 
-// 随机生一个加减计算，结果在指定范围内
-function randomSingleTest(max, min = 0, level = 1) {
+// 随机生一个乘除计算
+// 1 = 2 * 1
+// 2 = 2 * 2
+// 3 = 3 * 2
+function randomSingleTest(style, level = 1) {
     var t = ''
     var a = 0, b = 0
     var res = 0
-    var op = opers[randomNumber(opers.length - 1)]
+    var op = opers[style - 1]
     var eq = '='
 
-    do {
-        if (level === 1) {
-            // 随机取1个数字
-            a = randomNumber(max - 1, 1)
-            // 随机取第2个数字
-            if (op == '+') {
-                b = randomNumber(max - a - 1, 1)
-                res = a + b
-            }
-            else {
-                b = randomNumber(a - 1, 1)
-                res = a - b
-            }
-        } else if (level === 2) {
-             // 随机取1个数字
-            a = randomNumber(max - 21, 10)
-            // 随机取第2个数字
-            if (op == '+') {
-                b = randomNumber(max - a - 1, 10)
-                res = a + b
-            }
-            else {
-                b = randomNumber(a - 1, 10)
-                res = a - b
-            }
-        } else {
-             // 随机取1个数字
-             a = randomNumber(max - 201, 100)
-             // 随机取第2个数字
-             if (op == '+') {
-                 b = randomNumber(max - a - 1, 100)
-                 res = a + b
-             }
-             else {
-                 b = randomNumber(a - 1, 100)
-                 res = a - b
-             }
-        }
-    } while (res < min || res > max)
 
+    if (level === 1) {
+        // 随机取1个数字
+         a = randomNumber(99, 10)
+        // 随机取第2个数字
+         b = randomNumber(9, 1)    
+    } else if (level === 2) {
+        // 随机取1个数字
+        a = randomNumber(99, 10)
+        // 随机取第2个数字
+         b = randomNumber(99, 10)   
+    } else {
+        // 随机取1个数字
+        a = randomNumber(999, 100)
+        // 随机取第2个数字
+        b = randomNumber(99, 10)   
+    }
+    res = a*b
+
+    if (style == 2) { // 除法
+        if (a>b) {
+            var tmp = b
+            b = a
+            a = res
+            res = tmp
+        } else {
+            var tmp = a
+            a = res
+            res = tmp
+        }
+    }
+ 
     var arr = new Array(a, op, b, eq)
     return { q: arr.join(' '), a: res }
 }
@@ -98,7 +93,6 @@ function makeTest( num, col ) {
         return
     }
 
-
     var pagebody = $(".page")
 
     // 生成Data
@@ -113,6 +107,17 @@ function makeTest( num, col ) {
     var level = $("input[name='level']:checked").val()
     console.log('level', level)
 
+    var styles = []
+    $("input[name='style']:checked").each(function(){
+        styles.push(Number($(this).val()))
+    })
+    console.log('style', styles)
+
+    if (styles.length === 0) {
+        layer.alert('请选择至少一个题目类型')
+        return
+    }
+
     var colgroup = []
     var list = []
 
@@ -120,14 +125,20 @@ function makeTest( num, col ) {
         colgroup.push(w)
     }
 
+    // 平均分配
+    var ops = []
+    const l = styles.length
+    for(var i=0; i<num; i++){
+        ops.push(styles[i%l])
+    }
+   
     var cols = []
     for(var i=0; i<num; i++){
-        //  随机生成1000以内加减法
         if( i % col == 0){
             cols = []
         }
 
-        cols.push(randomSingleTest(1000, 1, Number(level)))
+        cols.push(randomSingleTest(ops[i], Number(level)))
 
         if((i % col) == (col - 1)){
             list.push([].concat(cols))
@@ -170,7 +181,6 @@ $("#save").on('click',function () {
         //方向默认竖直，尺寸ponits，格式a4[595.28,841.89]
         var pdf = new jsPDF('', 'pt', 'a4')
 
-        console.log('ccccccc',canvas.width, canvas.height)
         //addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
         pdf.addImage(pageData, 'JPEG', 20, 40, 535.28, 535.28/canvas.width * canvas.height )
 

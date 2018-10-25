@@ -20,29 +20,54 @@ function randomNumber(max, min = 0) {
 }
 
 // 随机生一个加减计算，结果在指定范围内
-function randomSingleTest(max, min = 0) {
+function randomSingleTest(max, min = 0, level = 1) {
     var t = ''
     var a = 0, b = 0
     var res = 0
-    var op = opers[randomNumber(opers.length-1)]
+    var op = opers[randomNumber(opers.length - 1)]
     var eq = '='
 
-    do{
-        // 随机取1个数字
-        a = randomNumber(max-1)
-        // 随机取第2个数字
-        if( op == '+'){
-            b = randomNumber(max -a - 1)
-            res = a + b
+    do {
+        if (level === 1) {
+            // 随机取1个数字
+            a = randomNumber(max - 1, 1)
+            // 随机取第2个数字
+            if (op == '+') {
+                b = randomNumber(max - a - 1, 1)
+                res = a + b
+            }
+            else {
+                b = randomNumber(a - 1, 1)
+                res = a - b
+            }
+        } else if (level === 2) {
+             // 随机取1个数字
+            a = randomNumber(max - 21, 10)
+            // 随机取第2个数字
+            if (op == '+') {
+                b = randomNumber(max - a - 1, 10)
+                res = a + b
+            }
+            else {
+                b = randomNumber(a - 1, 10)
+                res = a - b
+            }
+        } else {
+             // 随机取1个数字
+             a = randomNumber(max - 201, 100)
+             // 随机取第2个数字
+             if (op == '+') {
+                 b = randomNumber(max - a - 1, 100)
+                 res = a + b
+             }
+             else {
+                 b = randomNumber(a - 1, 100)
+                 res = a - b
+             }
         }
-        else{
-            b = randomNumber(a - 1)
-            res = a - b
-        }
+    } while (res < min || res > max)
 
-    }while( res < min && res > max)
-
-    var arr = new Array(a,op,b,eq)
+    var arr = new Array(a, op, b, eq)
     return { q: arr.join(' '), a: res }
 }
 
@@ -78,6 +103,9 @@ function makeTest( num, col ) {
     data.info.time = $("input[name='date']").val()
     data.info.grade = $("input[name='grade']").val()
     data.info.name  = $("input[name='name']").val()
+  
+    var level = $("input[name='level']:checked").val()
+    console.log('level', level)
 
     var colgroup = []
     var list = []
@@ -93,7 +121,7 @@ function makeTest( num, col ) {
             cols = []
         }
 
-        cols.push(randomSingleTest(1000))
+        cols.push(randomSingleTest(1000, 1, Number(level)))
 
         if((i % col) == (col - 1)){
             list.push([].concat(cols))
@@ -122,18 +150,23 @@ $("#answer").on('click',function () {
 $("#save").on('click',function () {
 
     var page = document.getElementById('page')
-
     html2canvas(page,{
     }).then(function(canvas) {
+        var context = canvas.getContext('2d');
+        // 关闭抗锯齿
+        context.mozImageSmoothingEnabled = false;
+        context.webkitImageSmoothingEnabled = false;
+        context.msImageSmoothingEnabled = false;
+        context.imageSmoothingEnabled = false;
         //返回图片dataURL，参数：图片格式和清晰度(0-1)
-        var pageData = canvas.toDataURL('image/jpeg', 1.0);
+        var pageData = canvas.toDataURL('image/jpeg', 1.0)
 
         //方向默认竖直，尺寸ponits，格式a4[595.28,841.89]
-        var pdf = new jsPDF('', 'pt', 'a4');
+        var pdf = new jsPDF('', 'pt', 'a4')
 
         console.log('ccccccc',canvas.width, canvas.height)
         //addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
-        pdf.addImage(pageData, 'JPEG', 20, 40, 535.28, 535.28/canvas.width * canvas.height );
+        pdf.addImage(pageData, 'JPEG', 20, 40, 535.28, 535.28/canvas.width * canvas.height )
 
         var ans = $('span.answer').hasClass('hidden')
         var date = $("input[name='date']").val()
